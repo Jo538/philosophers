@@ -53,3 +53,7 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# specific to this project
+docs/
+CLAUDE.md
