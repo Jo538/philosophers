@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/07 20:50:23 by admin            ###   ########.fr       */
+/*   Created: 2026/06/07 19:04:31 by admin             #+#    #+#             */
+/*   Updated: 2026/06/07 20:40:47 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <pthread.h>
-# include <sys/time.h>
-# include <sys/wait.h>
-
-# define INVALID_ARGC 1
-# define INVALID_ARGV 2
-
-int	validate_args(int argc, char **argv);
-int	*convert_to_int(int argc, char **argv);
-
-#endif
+void test_validate_args(void);
+void test_convert_to_int(void);

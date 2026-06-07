@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:17:29 by admin             #+#    #+#             */
-/*   Updated: 2026/06/06 18:00:03 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/07 20:22:45 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_positive_int(char *str)
 		i++;	
 	while (str[i])
 	{
-		if (!ft_is_digit(str[i]))
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}
@@ -52,7 +52,7 @@ static int	are_positive_ints(char **argv)
 
 int	validate_args(int argc, char **argv)
 {
-	if ((argc != 4) || (argc != 5))
+	if ((argc != 4) && (argc != 5))
 	{
 		printf("%s\n", "Error: Incorrect number of philosophers");
 		return (1);	

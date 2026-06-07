@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/07 20:50:23 by admin            ###   ########.fr       */
+/*   Created: 2026/06/07 19:03:14 by admin             #+#    #+#             */
+/*   Updated: 2026/06/07 20:41:25 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "test.h"
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <pthread.h>
-# include <sys/time.h>
-# include <sys/wait.h>
-
-# define INVALID_ARGC 1
-# define INVALID_ARGV 2
-
-int	validate_args(int argc, char **argv);
-int	*convert_to_int(int argc, char **argv);
-
-#endif
+int main(void)
+{
+	printf("%s\n\n", "-----VALIDATE COMMAND LINE ARGUMENTS-----");
+	test_validate_args();
+	printf("\n\n%s\n\n", "-----CONVERT COMMAND LINE ARGUMENTS TO AN ARRAY OF INTS-----");
+	test_convert_to_int();
+}
