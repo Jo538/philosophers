@@ -5,32 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/10 12:47:11 by admin            ###   ########.fr       */
+/*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
+/*   Updated: 2026/06/10 16:15:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	grab_right_fork(pthread_mutex_t *right_fork)
+// how do I communicate an error happening in the routine back to make_philo_and_call_routine?
+static void	*routine(void *arg)
 {
-	if (pthread_mutex_lock(right_fork))
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	grab_right_fork(&(philo->right_fork));
+	grab_left_fork(&(philo->left_fork));
+	eat();
+	release_right_fork(&(philo->right_fork));
+	release_left_fork(&(philo->left_fork));
+	philo_sleep();
+	think();
+	return (NULL);
+}
+
+int	make_philo_and_call_routine(t_philo *philo)
+{
+	int			id;
+
+	id = 1;
+	if (pthread_create(&(philo->philo), NULL, routine, philo))
 	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for right fork");
+		printf("%s\n", "Error: pthread_create failed");
 		return (1);
 	}
-	printf("%s\n", "Philo grabbed right fork");
+	printf("%s\n", "philo created");
 	return (0);
 }
-
-void	grab_left_fork(pthread_mutex_t *left_fork)
-{
-	if (pthread_mutex_lock(left_fork))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for left fork");
-		return (1);
-	}
-	printf("%s\n", "Philo grabbed left fork");
-	return (0);		
-}
-

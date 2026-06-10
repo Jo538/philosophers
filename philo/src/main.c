@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:08:01 by admin             #+#    #+#             */
-/*   Updated: 2026/06/10 12:59:57 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/10 16:00:11 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char **argv)
 	if (!array_of_ints)
 		return (1);
 	if (initialise_setup(&philo))
+		return (1);
+	if (make_philo_and_call_routine(&philo))
 		return (1);
 	return (0);
 }

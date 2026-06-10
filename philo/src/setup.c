@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/10 12:57:59 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/10 15:57:09 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,9 @@ int	make_forks(t_philo *philo)
 	printf("%s\n", "Left fork created");
 	return (0);
 }
-void *worker(void *arg) 
-{
-    int id = *(int *)arg;
-    return NULL;
-}
-
-int	make_philo(t_philo *philo)
-{
-	int			id;
-
-	id = 1;
-	if (pthread_create(&(philo->philo), NULL, worker, &id))
-	{
-		printf("%s\n", "Error: pthread_create failed");
-		return (1);
-	}
-	printf("%s\n", "philo created");
-	return (0);
-}
 
 int	initialise_setup(t_philo *philo)
 {
-	if (make_philo(philo))
-		return (1);
 	if (make_forks(philo))
 	{
 		pthread_join(philo->philo, NULL);
