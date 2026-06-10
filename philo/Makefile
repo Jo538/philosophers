@@ -6,13 +6,14 @@
 #    By: admin <admin@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/07 19:22:45 by admin             #+#    #+#              #
-#    Updated: 2026/06/07 21:01:09 by admin            ###   ########.fr        #
+#    Updated: 2026/06/10 12:27:00 by admin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler
 CC = cc
 CFLAGS = -g3 -O0
+ADDITIONAL_FLAGS = -lpthread
 VPATH = src:../test
 NAME = philo
 TEST_NAME = test_philo
@@ -22,11 +23,10 @@ INCLUDES = -Iincludes
 OBJ_DIR = obj
 
 # Sources and Objects
-SRC = main.c manip_args.c utils.c
-TEST_SRC = test_main.c test_args.c
+SRC = main.c manip_args.c utils.c setup.c
+TEST_SRC = test_main.c test_args.c test_setup.c
 	
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-LIBFT_ARCHIVE = $(LIBFT_DIR)/libft.a
 
 # Default rule
 all: $(NAME)

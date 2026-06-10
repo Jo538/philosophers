@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 19:03:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/07 23:49:58 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/10 11:44:47 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void test_validate_args(void)
 
 	// Test 1: 1 2 3
 	res = validate_args(4, (char *[]){"test_philo", "1", "2", "3", NULL});
-	assert(res, 0, "1 2 3", 1);
+	assert(res, 1, "1 2 3", 1);
 
 	// Test 2: 1 2 3 4
 	res = validate_args(5, (char *[]){"test_philo", "1", "2", "3", "4", NULL});
@@ -35,7 +35,7 @@ void test_validate_args(void)
 	
 	// Test 3: 1 2 3 4 5 --> too many arguments
 	res = validate_args(6, (char *[]){"test_philo", "1", "2", "3", "4", "5", NULL});
-	assert(res, 1, "1 2 3 4 5", 3);
+	assert(res, 0, "1 2 3 4 5", 3);
 	
 	// Test 4: 1 2 --> not enough arguments
 	res = validate_args(3, (char *[]){"test_philo", "1", "2", NULL});
