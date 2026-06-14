@@ -8,7 +8,7 @@
 		"name": "(lldb) Launch",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "${workspaceFolder}/philo/test_philo",
+		"program": "${workspaceFolder}/philo/philo",
 		"args": ["1", "10", "10", "10"],
 		"stopAtEntry": false,
 		"cwd": "${fileDirname}",
@@ -20,7 +20,7 @@
 			"name": "Launch",
 			"type": "lldb",
 			"request": "launch",
-			"program": "${workspaceFolder}/philo/test_philo",
+			"program": "${workspaceFolder}/philo/philo",
 			"args": ["1", "10", "10", "10"],
 			"cwd": "${workspaceRoot}"
 		}

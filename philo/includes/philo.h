@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/10 16:06:51 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 18:57:08 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,36 @@
 
 typedef struct s_philo
 {
-	int	id;
-	pthread_t	philo;
+	int				id;
+	int				number_of_philosphers;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			time_last_meal;
+	int				repeat;
+	pthread_t		philo;
+	pthread_t		monitor;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
-	
+	long			start_simulation;	
 } t_philo;
 
 
 int	validate_args(int argc, char **argv);
-int	*convert_to_int(int argc, char **argv);
-int	initialise_setup(t_philo *philo);
+void	convert_to_int(char **argv, t_philo *philo);
+int	initialise_setup(char **argv, t_philo *philo);
 int	make_philo_and_call_routine(t_philo *philo);
+int	clean_setup(t_philo *philo);
+int	log_start_time(t_philo *philo);
+long	log_timestamp(t_philo *philo);
 
 // Elements of routine
-int	make_philo_and_call_routine(t_philo *philo);
-int	grab_right_fork(pthread_mutex_t *right_fork);
-int	grab_left_fork(pthread_mutex_t *left_fork);
-int	release_right_fork(pthread_mutex_t *right_fork);
-int	release_left_fork(pthread_mutex_t *left_fork);
-int	eat(void);
-int	philo_sleep(void);
-int	think(void);
+int	launch(t_philo *philo);
+int	grab_right_fork(t_philo *philo);
+int	grab_left_fork(t_philo *philo);
+int	release_right_fork(t_philo *philo);
+int	release_left_fork(t_philo *philo);
+int	eat(t_philo *philo);
+int	philo_sleep_and_think(t_philo *philo);
 
 #endif

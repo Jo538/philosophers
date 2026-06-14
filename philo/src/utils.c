@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/07 20:49:51 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 18:57:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,63 @@ static int	ft_atoi(const char *str)
 	return (sign * num);
 }
 
-int	*convert_to_int(int argc, char **argv)
+void	convert_to_int(char **argv, t_philo *philo)
 {
-	int	i;
-	int	size;
-	int	*array;
+	philo->number_of_philosphers = ft_atoi(argv[1]);
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+		philo->repeat = ft_atoi(argv[5]);
+}
 
-	size = argc - 1;
-	array = malloc(size * sizeof(int));
-	if (!array)
+int	log_start_time(t_philo *philo)
+{
+	struct timeval	start;
+
+	if (gettimeofday(&start, NULL))
+		return (1);
+	philo->start_simulation = start.tv_sec * 1000 + start.tv_usec / 1000;
+	return (0);
+}
+
+long	log_timestamp(t_philo *philo)
+{
+	struct timeval	end;
+	long			timestamp;
+	long			end_in_ms;
+	
+	if (gettimeofday(&end, NULL))
 	{
-		printf("%s\n", "Error: Malloc");
-		return (NULL);
+		printf("%s\n", "Error: gettimeofday failed");
+		return (-1);		
 	}
-	memset(array, '\0', size * sizeof(int));
-	i = 0;
-	while (i < size)
+	end_in_ms = end.tv_sec * 1000 + end.tv_usec / 1000;
+	timestamp = end_in_ms - philo->start_simulation;
+	return (timestamp);
+}
+
+int	clean_setup(t_philo *philo)
+{
+	if (pthread_join(philo->philo, NULL))
 	{
-		array[i] = ft_atoi(argv[i + 1]);
-		i++;
+		printf("%s\n", "Error: pthread_join failed");
+		return (1);
+	}	
+	if (pthread_join(philo->monitor, NULL))
+	{
+		printf("%s\n", "Error: pthread_join failed");
+		return (1);
+	}	
+	if (pthread_mutex_destroy(&(philo->right_fork)))
+	{
+		printf("%s\n", "Error: pthread_mutex_destroy failed for right fork");
+		return (1);
+	}	
+	if (pthread_mutex_destroy(&(philo->left_fork)))
+	{
+		printf("%s\n", "Error: pthread_mutex_destroy failed for right fork");
+		return (1);
 	}
-	return (array);
+	return (0);
 }
