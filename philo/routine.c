@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 19:03:59 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 19:50:35 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ static void	*routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	grab_right_fork(philo);
-	grab_left_fork(philo);
-	eat(philo);
-	release_right_fork(philo);
-	release_left_fork(philo);
-	philo_sleep_and_think(philo);
+	while (!philo->is_dead && philo->number_of_meals_eaten < philo->number_of_times_must_eat)
+	{
+		grab_right_fork(philo);
+		grab_left_fork(philo);
+		eat(philo);
+		release_right_fork(philo);
+		release_left_fork(philo);
+		philo_sleep_and_think(philo);		
+	}
 	return (NULL);
 }
 
@@ -37,8 +40,11 @@ static void	*routine_monitor(void *arg)
 	while (1)
 	{
 		timestamp = log_timestamp(philo) - philo->time_last_meal;
+		// printf("log_timestamp: %ld\n", timestamp);
+		// printf("last meal time: %ld\n", philo->time_last_meal);
 		if (timestamp >= philo->time_to_die)
 		{
+			philo->is_dead = 1;
 			printf("%ld ms: philo %d died\n", timestamp, philo->id);
 			break ;
 		}
@@ -48,9 +54,7 @@ static void	*routine_monitor(void *arg)
 
 int	launch_monitor(t_philo *philo)
 {
-	pthread_t	monitor;
-
-	if (pthread_create(&monitor, NULL, routine_monitor, philo))
+	if (pthread_create(&(philo->monitor), NULL, routine_monitor, philo))
 	{
 		printf("%s\n", "Error: pthread_create failed");
 		return (1);

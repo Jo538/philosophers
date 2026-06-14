@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 17:58:53 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 19:33:15 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	make_forks(t_philo *philo)
 int	initialise_setup(char **argv, t_philo *philo)
 {
 	philo->id = 1;
+	philo->is_dead = 0;
 	
 	convert_to_int(argv, philo);
 	if (make_forks(philo))

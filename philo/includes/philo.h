@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 18:57:08 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 19:36:18 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@
 typedef struct s_philo
 {
 	int				id;
+	int				is_dead;
 	int				number_of_philosphers;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			time_last_meal;
-	int				repeat;
+	int				number_of_times_must_eat;
+	int				number_of_meals_eaten;
 	pthread_t		philo;
 	pthread_t		monitor;
 	pthread_mutex_t	right_fork;

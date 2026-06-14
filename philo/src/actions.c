@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 18:41:16 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 19:27:35 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,10 @@ int	release_left_fork(t_philo *philo)
 
 int	eat(t_philo *philo)
 {
-	long	timestamp;
-
 	philo->time_last_meal = log_timestamp(philo);
 	if (philo->time_last_meal == -1)
 		return (1);
-	printf("%ld ms: philo %d is eating\n", timestamp, philo->id);
+	printf("%ld ms: philo %d is eating\n", philo->time_last_meal, philo->id);
 	if (usleep(philo->time_to_eat))
 	{
 		printf("%s\n", "Error: usleep failed for eating");

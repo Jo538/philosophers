@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 18:57:36 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/14 19:37:36 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	convert_to_int(char **argv, t_philo *philo)
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		philo->repeat = ft_atoi(argv[5]);
+		philo->number_of_meals_eaten = ft_atoi(argv[5]);
 }
 
 int	log_start_time(t_philo *philo)
