@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 14:48:46 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 21:19:08 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	make_philo_and_call_routine(t_philo *philo);
 int	clean_setup(t_philo *philo);
 int	log_start_time(t_philo *philo);
 long	log_timestamp(t_philo *philo);
+int	error(char *msg, int to_ret);
 
 // Elements of routine
 int	launch(t_philo *philo);

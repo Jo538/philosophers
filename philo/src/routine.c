@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 15:46:43 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 21:31:46 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,48 +15,30 @@
 static int	is_dead(t_philo *philo)
 {
 	if (pthread_mutex_lock(&(philo->lock)))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_lock failed for lock", -1));
 	if (philo->is_dead)
 	{
 		if (pthread_mutex_unlock(&(philo->lock)))
-		{
-			printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-			return (-1);
-		}
+			return (error("Error: pthread_mutex_unlock failed for lock", -1));
 		return (1);
 	}
 	if (pthread_mutex_unlock(&(philo->lock)))
-	{
-		printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_unlock failed for lock", -1));
 	return (0);
 }
 
 static int	has_eaten_enough(t_philo *philo)
 {
 	if (pthread_mutex_lock(&(philo->lock2)))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_lock failed for lock", -1));
 	if (philo->number_of_meals_eaten == philo->number_of_times_must_eat)
 	{
 		if (pthread_mutex_unlock(&(philo->lock2)))
-		{
-			printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-			return (-1);
-		}
+			return (error("Error: pthread_mutex_unlock failed for lock", -1));
 		return (1);		
 	}
 	if (pthread_mutex_unlock(&(philo->lock2)))
-	{
-		printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_unlock failed for lock", -1));
 	return (0);
 }
 
@@ -95,16 +77,10 @@ static void	*routine_monitor(void *arg)
 		if (timestamp >= philo->time_to_die)
 		{
 			if (pthread_mutex_lock(&(philo->lock)))
-			{
-				printf("%s\n", "Error: pthread_mutex_lock failed for lock");
-				return (NULL);
-			}
+				return (error("Error: pthread_mutex_lock failed for lock", 1), NULL);
 			philo->is_dead = 1;
 			if (pthread_mutex_unlock(&(philo->lock)))
-			{
-				printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-				return (NULL);
-			}
+				return (error("Error: pthread_mutex_unlock failed for lock", 1), NULL);
 			printf("%ld ms: philo %d died\n", timestamp, philo->id);
 			break ;
 		}
@@ -116,10 +92,7 @@ static void	*routine_monitor(void *arg)
 int	launch_monitor(t_philo *philo)
 {
 	if (pthread_create(&(philo->monitor), NULL, routine_monitor, philo))
-	{
-		printf("%s\n", "Error: pthread_create failed");
-		return (1);
-	}
+		return (error("Error: pthread_create failed", 1));
 	return (0);	
 }
 
@@ -128,9 +101,6 @@ int	launch(t_philo *philo)
 	if (launch_monitor(philo))
 		return (1);
 	if (pthread_create(&(philo->philo), NULL, routine, philo))
-	{
-		printf("%s\n", "Error: pthread_create failed");
-		return (1);
-	}
+		return (error("Error: pthread_create failed", 1));
 	return (0);
 }

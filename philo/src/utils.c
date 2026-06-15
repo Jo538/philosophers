@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 15:11:22 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 21:26:49 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ long	log_timestamp(t_philo *philo)
 	long			end_in_ms;
 	
 	if (gettimeofday(&end, NULL))
-	{
-		printf("%s\n", "Error: gettimeofday failed");
-		return (-1);		
-	}
+		return (error("Error: gettimeofday failed", -1));
 	end_in_ms = end.tv_sec * 1000 + end.tv_usec / 1000;
 	timestamp = end_in_ms - philo->start_simulation;
 	return (timestamp);
@@ -76,34 +73,16 @@ long	log_timestamp(t_philo *philo)
 int	clean_setup(t_philo *philo)
 {
 	if (pthread_join(philo->philo, NULL))
-	{
-		printf("%s\n", "Error: pthread_join failed");
-		return (1);
-	}	
+		return (error("Error: pthread_join failed", 1));
 	if (pthread_join(philo->monitor, NULL))
-	{
-		printf("%s\n", "Error: pthread_join failed");
-		return (1);
-	}	
+		return (error("Error: pthread_join failed", 1));
 	if (pthread_mutex_destroy(&(philo->right_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_destroy failed for right fork");
-		return (1);
-	}	
+		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
 	if (pthread_mutex_destroy(&(philo->left_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_destroy failed for right fork");
-		return (1);
-	}
+		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
 	if (pthread_mutex_destroy(&(philo->lock)))
-	{
-		printf("%s\n", "Error: pthread_mutex_destroy failed for lock");
-		return (1);
-	}
+		return (error( "Error: pthread_mutex_destroy failed for lock", 1));
 	if (pthread_mutex_destroy(&(philo->lock2)))
-	{
-		printf("%s\n", "Error: pthread_mutex_destroy failed for lock");
-		return (1);
-	}
+		return (error("Error: pthread_mutex_destroy failed for lock", 1));
 	return (0);
 }
