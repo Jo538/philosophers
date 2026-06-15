@@ -6,7 +6,7 @@
 /*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 15:20:04 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 15:28:32 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static void	*routine_monitor(void *arg)
 
 	while (1)
 	{
+		if (has_eaten_enough(philo))
+			return (NULL);
 		timestamp = log_timestamp(philo) - philo->time_last_meal;
 		if (timestamp >= philo->time_to_die)
 		{
@@ -103,7 +105,7 @@ static void	*routine_monitor(void *arg)
 				printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
 				return (NULL);
 			}
-			printf("%ld ms: philo %d died\n", timestamp, philo->id);
+			//printf("%ld ms: philo %d died\n", timestamp, philo->id);
 			break ;
 		}
 	}	
