@@ -6,7 +6,7 @@
 /*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 14:17:56 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 15:07:55 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ int	make_forks(t_philo *philo)
 int	initialise_setup(char **argv, t_philo *philo)
 {
 	philo->id = 1;
-	philo->is_dead = 0;	
+	philo->is_dead = 0;
+	philo->number_of_meals_eaten = 0;	
 	convert_to_int(argv, philo);
 	if (pthread_mutex_init(&(philo->lock), NULL))
+	{
+		printf("%s\n", "Error: pthread_mutex_init failed for lock");
+		return (1);		
+	}
+	if (pthread_mutex_init(&(philo->lock2), NULL))
 	{
 		printf("%s\n", "Error: pthread_mutex_init failed for lock");
 		return (1);		

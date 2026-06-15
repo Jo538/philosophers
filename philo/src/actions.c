@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 19:27:35 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/15 14:56:33 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,17 @@ int	eat(t_philo *philo)
 	{
 		printf("%s\n", "Error: usleep failed for eating");
 		return (1);
+	}
+	if (pthread_mutex_lock(&(philo->lock2)))
+	{
+		printf("%s\n", "Error: pthread_mutex_lock failed for lock");
+		return (-1);
+	}
+	philo->number_of_meals_eaten++;
+	if (pthread_mutex_unlock(&(philo->lock2)))
+	{
+		printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
+		return (-1);
 	}
 	return (0);
 }
