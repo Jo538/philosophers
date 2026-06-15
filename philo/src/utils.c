@@ -6,7 +6,7 @@
 /*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 15:05:00 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 15:11:22 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ int	clean_setup(t_philo *philo)
 		return (1);
 	}
 	if (pthread_mutex_destroy(&(philo->lock)))
+	{
+		printf("%s\n", "Error: pthread_mutex_destroy failed for lock");
+		return (1);
+	}
+	if (pthread_mutex_destroy(&(philo->lock2)))
 	{
 		printf("%s\n", "Error: pthread_mutex_destroy failed for lock");
 		return (1);

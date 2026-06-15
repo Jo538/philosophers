@@ -6,7 +6,7 @@
 /*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 15:05:13 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 15:20:04 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	has_eaten_enough(t_philo *philo)
 	}
 	if (philo->number_of_meals_eaten == philo->number_of_times_must_eat)
 	{
-		if (pthread_mutex_unlock(&(philo->lock)))
+		if (pthread_mutex_unlock(&(philo->lock2)))
 		{
 			printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
 			return (-1);
