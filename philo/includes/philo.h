@@ -39,6 +39,7 @@ typedef struct s_philo
 	pthread_t		philo;
 	pthread_t		monitor;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	lock2;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
 	long			start_simulation;	
