@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 21:19:08 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/15 21:47:18 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,28 @@ typedef struct s_philo
 	long			start_simulation;	
 } t_philo;
 
+// Functions called by main
+int		log_start_time(t_philo *philo);
+int		validate_args(int argc, char **argv);
+int		initialise_setup(char **argv, t_philo *philo);
+int		launch(t_philo *philo);
+int		clean_setup(t_philo *philo);
 
-int	validate_args(int argc, char **argv);
-void	convert_to_int(char **argv, t_philo *philo);
-int	initialise_setup(char **argv, t_philo *philo);
-int	make_philo_and_call_routine(t_philo *philo);
-int	clean_setup(t_philo *philo);
-int	log_start_time(t_philo *philo);
+// Exit program conditions
+int	is_dead(t_philo *philo);
+int	has_eaten_enough(t_philo *philo);
+
+// Utils
 long	log_timestamp(t_philo *philo);
-int	error(char *msg, int to_ret);
+int		error(char *msg, int to_ret);
+void	convert_to_int(char **argv, t_philo *philo);
 
 // Elements of routine
-int	launch(t_philo *philo);
 int	grab_right_fork(t_philo *philo);
 int	grab_left_fork(t_philo *philo);
 int	release_right_fork(t_philo *philo);
 int	release_left_fork(t_philo *philo);
 int	eat(t_philo *philo);
-int	philo_sleep_and_think(t_philo *philo);
+int	ft_sleep(t_philo *philo);
 
 #endif

@@ -3,66 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 14:56:33 by jchartie         ###   ########.fr       */
+/*   Updated: 2026/06/15 21:40:46 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	grab_right_fork(t_philo *philo)
-{
-	long	timestamp;
-
-	if (pthread_mutex_lock(&(philo->right_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for right fork");
-		return (1);
-	}
-	timestamp = log_timestamp(philo);
-	if (timestamp == -1)
-		return (1);
-	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
-	return (0);
-}
-
-int	grab_left_fork(t_philo *philo)
-{
-	long	timestamp;
-
-	if (pthread_mutex_lock(&(philo->left_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for left fork");
-		return (1);
-	}
-	timestamp = log_timestamp(philo);
-	if (timestamp == -1)
-		return (1);
-	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
-	return (0);		
-}
-
-int	release_right_fork(t_philo *philo)
-{
-	if (pthread_mutex_unlock(&(philo->right_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_unlock failed for right fork");
-		return (1);
-	}
-	return (0);
-}
-
-int	release_left_fork(t_philo *philo)
-{
-	if (pthread_mutex_unlock(&(philo->left_fork)))
-	{
-		printf("%s\n", "Error: pthread_mutex_unlock failed for left fork");
-		return (1);
-	}
-	return (0);		
-}
 
 int	eat(t_philo *philo)
 {
@@ -71,25 +19,16 @@ int	eat(t_philo *philo)
 		return (1);
 	printf("%ld ms: philo %d is eating\n", philo->time_last_meal, philo->id);
 	if (usleep(philo->time_to_eat))
-	{
-		printf("%s\n", "Error: usleep failed for eating");
-		return (1);
-	}
+		return (error("Error: usleep failed for eating", 1));
 	if (pthread_mutex_lock(&(philo->lock2)))
-	{
-		printf("%s\n", "Error: pthread_mutex_lock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_lock failed for lock", 1));
 	philo->number_of_meals_eaten++;
 	if (pthread_mutex_unlock(&(philo->lock2)))
-	{
-		printf("%s\n", "Error: pthread_mutex_unlock failed for lock");
-		return (-1);
-	}
+		return (error("Error: pthread_mutex_unlock failed for lock", 1));
 	return (0);
 }
 
-int	philo_sleep_and_think(t_philo *philo)
+int	ft_sleep(t_philo *philo)
 {
 	long	timestamp;
 
@@ -98,10 +37,7 @@ int	philo_sleep_and_think(t_philo *philo)
 		return (1);
 	printf("%ld ms: philo %d is sleeping\n", timestamp, philo->id);
 	if (usleep(philo->time_to_sleep))
-	{
-		printf("%s\n", "Error: usleep failed for sleeping");
-		return (1);
-	}
+		return (error("Error: usleep failed for sleeping", 1));
 	timestamp = log_timestamp(philo);
 	if (timestamp == -1)
 		return (1);

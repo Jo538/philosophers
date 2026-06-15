@@ -6,41 +6,11 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 21:31:46 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/15 21:42:49 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	is_dead(t_philo *philo)
-{
-	if (pthread_mutex_lock(&(philo->lock)))
-		return (error("Error: pthread_mutex_lock failed for lock", -1));
-	if (philo->is_dead)
-	{
-		if (pthread_mutex_unlock(&(philo->lock)))
-			return (error("Error: pthread_mutex_unlock failed for lock", -1));
-		return (1);
-	}
-	if (pthread_mutex_unlock(&(philo->lock)))
-		return (error("Error: pthread_mutex_unlock failed for lock", -1));
-	return (0);
-}
-
-static int	has_eaten_enough(t_philo *philo)
-{
-	if (pthread_mutex_lock(&(philo->lock2)))
-		return (error("Error: pthread_mutex_lock failed for lock", -1));
-	if (philo->number_of_meals_eaten == philo->number_of_times_must_eat)
-	{
-		if (pthread_mutex_unlock(&(philo->lock2)))
-			return (error("Error: pthread_mutex_unlock failed for lock", -1));
-		return (1);		
-	}
-	if (pthread_mutex_unlock(&(philo->lock2)))
-		return (error("Error: pthread_mutex_unlock failed for lock", -1));
-	return (0);
-}
 
 // how do I communicate an error happening in the routine back to make_philo_and_call_routine?
 static void	*routine(void *arg)
@@ -57,7 +27,7 @@ static void	*routine(void *arg)
 		eat(philo);
 		release_right_fork(philo);
 		release_left_fork(philo);
-		philo_sleep_and_think(philo);				
+		ft_sleep(philo);				
 	}
 	return (NULL);
 }
@@ -89,17 +59,10 @@ static void	*routine_monitor(void *arg)
 	return (NULL);
 }
 
-int	launch_monitor(t_philo *philo)
+int	launch(t_philo *philo)
 {
 	if (pthread_create(&(philo->monitor), NULL, routine_monitor, philo))
 		return (error("Error: pthread_create failed", 1));
-	return (0);	
-}
-
-int	launch(t_philo *philo)
-{
-	if (launch_monitor(philo))
-		return (1);
 	if (pthread_create(&(philo->philo), NULL, routine, philo))
 		return (error("Error: pthread_create failed", 1));
 	return (0);

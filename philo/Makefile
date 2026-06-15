@@ -6,7 +6,7 @@
 #    By: admin <admin@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/07 19:22:45 by admin             #+#    #+#              #
-#    Updated: 2026/06/15 21:21:25 by admin            ###   ########.fr        #
+#    Updated: 2026/06/15 21:47:38 by admin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ INCLUDES = -Iincludes
 OBJ_DIR = obj
 
 # Sources and Objects
-SRC = main.c manip_args.c utils.c setup.c actions.c routine.c utils_bis.c
+SRC = main.c manip_args.c utils.c setup.c actions.c routine.c utils_bis.c \
+		forks.c exit_checks.c
 TEST_SRC = test_main.c test_args.c test_setup.c
 	
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
