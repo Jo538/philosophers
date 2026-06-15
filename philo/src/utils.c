@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 19:37:36 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/15 14:16:53 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ int	clean_setup(t_philo *philo)
 	if (pthread_mutex_destroy(&(philo->left_fork)))
 	{
 		printf("%s\n", "Error: pthread_mutex_destroy failed for right fork");
+		return (1);
+	}
+	if (pthread_mutex_destroy(&(philo->lock)))
+	{
+		printf("%s\n", "Error: pthread_mutex_destroy failed for lock");
 		return (1);
 	}
 	return (0);

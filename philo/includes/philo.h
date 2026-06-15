@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jchartie <jchartie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/14 19:36:18 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/15 14:13:06 by jchartie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 	int				number_of_meals_eaten;
 	pthread_t		philo;
 	pthread_t		monitor;
+	pthread_mutex_t	lock;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
 	long			start_simulation;	
