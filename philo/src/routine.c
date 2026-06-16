@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 12:56:29 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 14:12:05 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	*routine_monitor(void *arg)
 			return (NULL);
 		if (is_dead_monitor(param))
 			return (NULL);
-		usleep(5000);
+		usleep(1000);
 	}	
 	return (NULL);
 }

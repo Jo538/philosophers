@@ -6,14 +6,14 @@
 #    By: admin <admin@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/07 19:22:45 by admin             #+#    #+#              #
-#    Updated: 2026/06/15 21:47:38 by admin            ###   ########.fr        #
+#    Updated: 2026/06/16 14:16:08 by admin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler
 CC = cc
-CFLAGS = -g3 -O0
-ADDITIONAL_FLAGS = -lpthread
+CFLAGS = -g3 -O0 -fsanitize=thread -g
+ADDITIONAL_FLAGS = -lpthread 
 VPATH = src:../test
 NAME = philo
 TEST_NAME = test_philo

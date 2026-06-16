@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 12:56:06 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 14:26:28 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ typedef struct s_global
 	int				number_of_times_must_eat;
 	long			start_simulation;
 	pthread_t		monitor;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	lock2;
+	pthread_mutex_t	lock_is_dead;
+	pthread_mutex_t	lock_time_last_meal;
+	pthread_mutex_t	lock_number_of_meals_eaten;
 } t_global;
 
 typedef struct s_param

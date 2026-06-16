@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 12:33:22 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 14:25:48 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int	clean_setup(t_param *param)
 		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
 	if (pthread_mutex_destroy(&(philo->left_fork)))
 		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
-	if (pthread_mutex_destroy(&(global->lock)))
+	if (pthread_mutex_destroy(&(global->lock_is_dead)))
 		return (error( "Error: pthread_mutex_destroy failed for lock", 1));
-	if (pthread_mutex_destroy(&(global->lock2)))
+	if (pthread_mutex_destroy(&(global->lock_number_of_meals_eaten)))
 		return (error("Error: pthread_mutex_destroy failed for lock", 1));
 	return (0);
 }
