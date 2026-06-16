@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:08:01 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 22:24:18 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 12:12:54 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	param.philo = philo;
 	param.global = global;
-	if (log_start_time(&global))
+	if (log_start_time(&param.global))
 		return (1);
 	if (validate_args(argc, argv))
 		return (1);

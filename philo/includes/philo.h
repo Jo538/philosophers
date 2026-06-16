@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 22:26:52 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 12:56:06 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int		launch(t_param *param);
 int		clean_setup(t_param *param);
 
 // Exit program conditions
-int	is_dead(t_param *param);
+int	is_dead_routine(t_param *param);
+int	is_dead_monitor(t_param *param);
 int	has_eaten_enough(t_param *param);
 
 // Utils
@@ -78,5 +79,6 @@ int	release_right_fork(t_philo *philo);
 int	release_left_fork(t_philo *philo);
 int	eat(t_param *param);
 int	ft_sleep(t_param *param);
+int	ft_think(t_param *param);
 
 #endif
