@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 14:12:05 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 19:16:45 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	*routine(void *arg)
 	t_global	*global;
 
 	param = (t_param *)arg;
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	while (1)
 	{
@@ -49,7 +49,7 @@ static void	*routine_monitor(void *arg)
 	t_global	*global;
 
 	param = (t_param *)arg;
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	while (1)
 	{
@@ -62,17 +62,35 @@ static void	*routine_monitor(void *arg)
 	return (NULL);
 }
 
+static int	launch_routine(t_param *param)
+{
+	int			i;
+	t_philo		*philo;
+	t_global	*global;
+
+	philo = param->philo;
+	global = &param->global;
+
+	i = 0;
+	while (i < global->number_of_philosphers)
+	{
+		if (pthread_create(&(philo[i].philo), NULL, routine, param))
+			return (error("Error: pthread_create failed", 1));
+		i++;			
+	}
+	return (1);
+}
+
 int	launch(t_param *param)
 {
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 
 	if (pthread_create(&(global->monitor), NULL, routine_monitor, param))
 		return (error("Error: pthread_create failed", 1));
-	if (pthread_create(&(philo->philo), NULL, routine, param))
-		return (error("Error: pthread_create failed", 1));
+	launch_routine(param);
 	return (0);
 }

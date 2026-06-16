@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 14:26:28 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 17:53:20 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_global
 typedef struct s_param
 {
 	t_global	global;
-	t_philo		philo;
+	t_philo		*philo;
 } t_param;
 
 // Functions called by main

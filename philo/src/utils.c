@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 14:25:48 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 18:21:55 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,17 @@ long	log_timestamp(t_global *global)
 	return (timestamp);
 }
 
+// int	clean_philo(t_philo *philo)
+// {
+	
+// }
+
 int	clean_setup(t_param *param)
 {
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	
 	if (pthread_join(philo->philo, NULL))

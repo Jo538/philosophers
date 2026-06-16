@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:38:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/15 22:24:00 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 18:23:59 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	grab_right_fork(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	if (pthread_mutex_lock(&(philo->right_fork)))
 		return (error("Error: pthread_mutex_lock failed for right fork", 1));
@@ -36,7 +36,7 @@ int	grab_left_fork(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	if (pthread_mutex_lock(&(philo->left_fork)))
 		return (error("Error: pthread_mutex_lock failed for left fork", 1));

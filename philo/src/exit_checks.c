@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 17:04:02 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 18:24:14 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_dead_routine(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	if (pthread_mutex_lock(&(global->lock_is_dead)))
 		return (error("Error: pthread_mutex_lock failed for lock", -1));		
@@ -39,7 +39,7 @@ static int	log_time(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 
 	if (pthread_mutex_lock(&(global->lock_time_last_meal)))
@@ -56,7 +56,7 @@ int	is_dead_monitor(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	timestamp = log_time(param);
 	if (timestamp >= global->time_to_die)
@@ -77,7 +77,7 @@ int	has_eaten_enough(t_param *param)
 	t_philo		*philo;
 	t_global	*global;
 
-	philo = &param->philo;
+	philo = param->philo;
 	global = &param->global;
 	if (pthread_mutex_lock(&(global->lock_number_of_meals_eaten)))
 		return (error("Error: pthread_mutex_lock failed for lock", -1));
