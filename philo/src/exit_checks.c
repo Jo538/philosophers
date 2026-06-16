@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 14:39:05 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/16 17:04:02 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static int	log_time(t_param *param)
 	global = &param->global;
 
 	if (pthread_mutex_lock(&(global->lock_time_last_meal)))
-		return (error("Error: pthread_mutex_lock failed for lock_time_last_meal", 1));
+		return (error("Error: pthread_mutex_lock failed for lock_time_last_meal", -1));
 	timestamp = log_timestamp(global) - philo->time_last_meal;
 	if (pthread_mutex_unlock(&(global->lock_time_last_meal)))
-		return (error("Error: pthread_mutex_unlock failed for lock_time_last_meal", 1));
-	return (0);	
+		return (error("Error: pthread_mutex_unlock failed for lock_time_last_meal", -1));
+	return (timestamp);	
 }
 
 int	is_dead_monitor(t_param *param)
