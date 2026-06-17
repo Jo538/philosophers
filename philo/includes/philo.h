@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:37:56 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:04:16 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_global
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				number_of_times_must_eat;
+	int				is_dead;
 	int				have_eaten_enough;
 	long			start_simulation;
 	pthread_t		monitor;
@@ -44,7 +45,6 @@ typedef struct s_global
 typedef struct s_philo
 {
 	int				id;
-	int				is_dead;
 	long			time_last_meal;
 	int				number_of_meals_eaten;
 	pthread_t		philo;
@@ -62,8 +62,8 @@ int		clean_setup(t_philo *philo);
 
 // Exit program conditions
 int	is_dead_routine(t_philo *philo);
-int	is_dead_monitor(t_philo *philo);
-int	have_eaten_enough_monitor(t_philo *philo);
+int	monitor_death(t_philo *philo);
+int	monitor_eating(t_philo *philo);
 int	have_eaten_enough_routine(t_philo *philo);
 
 // Utils

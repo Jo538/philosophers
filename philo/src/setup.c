@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:28:42 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:07:00 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	setup_global(char **argv, t_global **global)
 {
+	(*global)->is_dead = 0;
 	(*global)->have_eaten_enough = 0;
 	convert_to_int(argv, global);
 	if (pthread_mutex_init(&((*global)->lock_is_dead), NULL))
@@ -41,7 +42,6 @@ static int	setup_philo(t_philo **philo, t_global **global)
 	while (i < size)
 	{
 		(*philo)[i].id = i + 1;
-		(*philo)[i].is_dead = 0;
 		(*philo)[i].number_of_meals_eaten = 0;
 		(*philo)[i].global = *global;
 		if (pthread_mutex_init(&((*philo)[i].right_fork), NULL))

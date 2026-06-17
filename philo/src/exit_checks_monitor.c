@@ -6,14 +6,14 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:42:49 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:05:44 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "philo.h"
 
-static int	log_time(t_philo *philo)
+static int	time_since_last_meal(t_philo *philo)
 {
 	long		timestamp;
 	t_global	*global;
@@ -28,23 +28,41 @@ static int	log_time(t_philo *philo)
 	return (timestamp);	
 }
 
-int	is_dead_monitor(t_philo *philo)
+static int	is_dead(t_philo *philo)
 {
 	long		timestamp;
 	t_global	*global;
 
 	global = philo->global;
-	timestamp = log_time(philo);
+	timestamp = time_since_last_meal(philo);
 	if (timestamp >= global->time_to_die)
-	{
-		if (pthread_mutex_lock(&(global->lock_is_dead)))
-			return (error("Error: pthread_mutex_lock failed for lock_is_dead", -1));
-		philo->is_dead = 1;
-		if (pthread_mutex_unlock(&(global->lock_is_dead)))
-			return (error("Error: pthread_mutex_unlock failed for lock_is_dead", -1));
+	{		
 		printf("%ld ms: philo %d died\n", timestamp, philo->id);
 		return (1);
 	}	
+	return (0);
+}
+
+int	monitor_death(t_philo *philo)
+{
+	int			i;
+	t_global	*global;
+
+	i = 0;
+	global = philo->global;
+	while (i < global->number_of_philosphers)
+	{
+		if (is_dead(&philo[i]))
+		{
+			if (pthread_mutex_lock(&(global->lock_is_dead)))
+				return (error("Error: pthread_mutex_lock failed for lock_is_dead", 1));
+			global->is_dead = 1;
+			if (pthread_mutex_unlock(&(global->lock_is_dead)))
+				return (error("Error: pthread_mutex_unlock failed for lock_is_dead", 1));
+			return (0);
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -66,17 +84,7 @@ static int	has_eaten_enough(t_philo *philo)
 	return (0);
 }
 
-static int	log_exit(t_global *global)
-{
-	if (pthread_mutex_lock(&(global->lock_have_eaten_enough)))
-		return (error("Error: pthread_mutex_lock failed for llock_have_eaten_enough", -1));
-	global->have_eaten_enough = 1;	
-	if (pthread_mutex_unlock(&(global->lock_have_eaten_enough)))
-		return (error("Error: pthread_mutex_unlock failed for lock_have_eaten_enough", -1));
-	return (0);	
-}
-
-int	have_eaten_enough_monitor(t_philo *philo)
+int	monitor_eating(t_philo *philo)
 {
 	int			i;
 	int			count;
@@ -92,6 +100,12 @@ int	have_eaten_enough_monitor(t_philo *philo)
 		i++;
 	}
 	if (count == global->number_of_philosphers)
-		log_exit(global);	
+	{
+		if (pthread_mutex_lock(&(global->lock_have_eaten_enough)))
+			return (error("Error: pthread_mutex_lock failed for llock_have_eaten_enough", 1));
+		global->have_eaten_enough = 1;	
+		if (pthread_mutex_unlock(&(global->lock_have_eaten_enough)))
+			return (error("Error: pthread_mutex_unlock failed for lock_have_eaten_enough", 1));
+	}	
 	return (0);
 }

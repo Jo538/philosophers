@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:41:20 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:07:31 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_dead_routine(t_philo *philo)
 	global = philo->global;
 	if (pthread_mutex_lock(&(global->lock_is_dead)))
 		return (error("Error: pthread_mutex_lock failed for lock", -1));		
-	if (philo->is_dead)
+	if (global->is_dead)
 	{
 		if (pthread_mutex_unlock(&(global->lock_is_dead)))
 			return (error("Error: pthread_mutex_unlock failed for lock_is_dead", -1));

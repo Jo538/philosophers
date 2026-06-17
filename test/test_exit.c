@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/17 17:02:49 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:47:40 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:06:14 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void test_have_eaten_enough(void)
 	philo[1].global = &global;
 	philo[1].number_of_meals_eaten = 3;
 
-	have_eaten_enough_monitor(philo);
+	monitor_eating(philo);
 	printf("Have eaten enough: %d\n", global.have_eaten_enough);
 	
 }
