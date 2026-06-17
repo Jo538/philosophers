@@ -6,18 +6,16 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 18:23:23 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:06:53 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-static int	log_last_meal(t_param *param)
+static int	log_last_meal(t_philo *philo)
 {
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 	if (pthread_mutex_lock(&(global->lock_time_last_meal)))
 		return (error("Error: pthread_mutex_lock failed for lock_time_last_meal", 1));
 	philo->time_last_meal = log_timestamp(global);
@@ -26,15 +24,13 @@ static int	log_last_meal(t_param *param)
 	return (0);
 }
 
-int	eat(t_param *param)
+int	eat(t_philo *philo)
 {
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 
-	if (log_last_meal(param))
+	if (log_last_meal(philo))
 		return (1);
 	printf("%ld ms: philo %d is eating\n", philo->time_last_meal, philo->id);
 	if (usleep(global->time_to_eat * 1000))
@@ -47,14 +43,12 @@ int	eat(t_param *param)
 	return (0);
 }
 
-int	ft_sleep(t_param *param)
+int	ft_sleep(t_philo *philo)
 {
 	long	timestamp;
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 
 	timestamp = log_timestamp(global);
 	if (timestamp == -1)
@@ -65,14 +59,12 @@ int	ft_sleep(t_param *param)
 	return (0);
 }
 
-int	ft_think(t_param *param)
+int	ft_think(t_philo *philo)
 {
 	long	timestamp;
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 	timestamp = log_timestamp(global);
 	if (timestamp == -1)
 		return (1);

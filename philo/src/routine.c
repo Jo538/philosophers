@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 11:41:53 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:01:34 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,25 @@
 // how do I communicate an error happening in the routine back to make_philo_and_call_routine?
 static void	*routine(void *arg)
 {
-	t_param		*param;
 	t_philo		*philo;
-	t_global	*global;
 
-	param = (t_param *)arg;
-	philo = param->philo;
-	global = &param->global;
-	printf("test: %d\n", philo->id);
+	philo = (t_philo *)arg;
+
 	while (1)
 	{
-		if (is_dead_routine(param) || has_eaten_enough(param))
+		if (is_dead_routine(philo) || has_eaten_enough(philo))
 			return (NULL);
-		grab_right_fork(param);
-		grab_left_fork(param);
-		eat(param);
+		grab_right_fork(philo);
+		grab_left_fork(philo);
+		eat(philo);
 		release_right_fork(philo);
 		release_left_fork(philo);
-		if (is_dead_routine(param))
+		if (is_dead_routine(philo))
 			return (NULL);
-		ft_sleep(param);
-		if (is_dead_routine(param))
+		ft_sleep(philo);
+		if (is_dead_routine(philo))
 			return (NULL);
-		ft_think(param);			
+		ft_think(philo);			
 	}
 	return (NULL);
 }
@@ -45,18 +41,14 @@ static void	*routine(void *arg)
 static void	*routine_monitor(void *arg)
 {
 	long	timestamp = 0;
-	t_param		*param;
 	t_philo		*philo;
-	t_global	*global;
 
-	param = (t_param *)arg;
-	philo = param->philo;
-	global = &param->global;
+	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (has_eaten_enough(param))
+		if (has_eaten_enough(philo))
 			return (NULL);
-		if (is_dead_monitor(param))
+		if (is_dead_monitor(philo))
 			return (NULL);
 		usleep(1000);
 	}	

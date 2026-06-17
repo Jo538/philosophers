@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 11:38:51 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:01:59 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int		launch(t_philo *philo);
 int		clean_setup(t_philo *philo);
 
 // Exit program conditions
-int	is_dead_routine(t_param *param);
-int	is_dead_monitor(t_param *param);
-int	has_eaten_enough(t_param *param);
+int	is_dead_routine(t_philo *philo);
+int	is_dead_monitor(t_philo *philo);
+int	has_eaten_enough(t_philo *philo);
 
 // Utils
 long	log_timestamp(t_global *global);
@@ -75,12 +75,12 @@ int		error(char *msg, int to_ret);
 void	convert_to_int(char **argv, t_global **global);
 
 // Elements of routine
-int	grab_right_fork(t_param *param);
-int	grab_left_fork(t_param *param);
+int	grab_right_fork(t_philo *philo);
+int	grab_left_fork(t_philo *philo);
 int	release_right_fork(t_philo *philo);
 int	release_left_fork(t_philo *philo);
-int	eat(t_param *param);
-int	ft_sleep(t_param *param);
-int	ft_think(t_param *param);
+int	eat(t_philo *philo);
+int	ft_sleep(t_philo *philo);
+int	ft_think(t_philo *philo);
 
 #endif
