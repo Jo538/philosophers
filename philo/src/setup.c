@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:25:13 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 17:28:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	setup_global(char **argv, t_global **global)
 	convert_to_int(argv, global);
 	if (pthread_mutex_init(&((*global)->lock_is_dead), NULL))
 		return (error("Error: pthread_mutex_init failed for lock_is_dead", 1));
+	if (pthread_mutex_init(&((*global)->lock_have_eaten_enough), NULL))
+		return (error("Error: pthread_mutex_init failed for lock_have_eaten_enough", 1));
 	if (pthread_mutex_init(&((*global)->lock_time_last_meal), NULL))
 		return (error("Error: pthread_mutex_init failed for lock_time_last_meal", 1));
 	if (pthread_mutex_init(&((*global)->lock_number_of_meals_eaten), NULL))

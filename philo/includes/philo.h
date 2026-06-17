@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:29:04 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 17:37:56 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_global
 	pthread_mutex_t	lock_is_dead;
 	pthread_mutex_t	lock_time_last_meal;
 	pthread_mutex_t	lock_number_of_meals_eaten;
+	pthread_mutex_t	lock_have_eaten_enough;
 } t_global;
 
 typedef struct s_philo
@@ -62,7 +63,8 @@ int		clean_setup(t_philo *philo);
 // Exit program conditions
 int	is_dead_routine(t_philo *philo);
 int	is_dead_monitor(t_philo *philo);
-int	have_eaten_enough(t_philo *philo);
+int	have_eaten_enough_monitor(t_philo *philo);
+int	have_eaten_enough_routine(t_philo *philo);
 
 // Utils
 long	log_timestamp(t_global *global);

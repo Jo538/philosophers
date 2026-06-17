@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:29:16 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 17:37:17 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	*routine(void *arg)
 
 	while (1)
 	{
-		if (is_dead_routine(philo) || has_eaten_enough(philo))
+		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
 		grab_right_fork(philo);
 		grab_left_fork(philo);
@@ -46,7 +46,7 @@ static void	*routine_monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (have_eaten_enough(philo))
+		if (have_eaten_enough_monitor(philo))
 			return (NULL);
 		if (is_dead_monitor(philo))
 			return (NULL);
