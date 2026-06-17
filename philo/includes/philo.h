@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:01:59 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:29:04 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_global
 	long			time_to_eat;
 	long			time_to_sleep;
 	int				number_of_times_must_eat;
+	int				have_eaten_enough;
 	long			start_simulation;
 	pthread_t		monitor;
 	pthread_mutex_t	lock_is_dead;
@@ -51,12 +52,6 @@ typedef struct s_philo
 	t_global		*global;
 } t_philo;
 
-typedef struct s_param
-{
-	t_global	global;
-	t_philo		*philo;
-} t_param;
-
 // Functions called by main
 int		log_start_time(t_global *global);
 int		validate_args(int argc, char **argv);
@@ -67,7 +62,7 @@ int		clean_setup(t_philo *philo);
 // Exit program conditions
 int	is_dead_routine(t_philo *philo);
 int	is_dead_monitor(t_philo *philo);
-int	has_eaten_enough(t_philo *philo);
+int	have_eaten_enough(t_philo *philo);
 
 // Utils
 long	log_timestamp(t_global *global);

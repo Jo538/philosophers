@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 11:40:02 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:25:13 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	setup_global(char **argv, t_global **global)
 {
+	(*global)->have_eaten_enough = 0;
 	convert_to_int(argv, global);
 	if (pthread_mutex_init(&((*global)->lock_is_dead), NULL))
 		return (error("Error: pthread_mutex_init failed for lock_is_dead", 1));

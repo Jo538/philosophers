@@ -6,11 +6,12 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:06:53 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 12:07:44 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 static int	log_last_meal(t_philo *philo)
 {
 	t_global	*global;
