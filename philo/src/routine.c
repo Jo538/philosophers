@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 19:16:45 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 11:41:53 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	*routine(void *arg)
 	param = (t_param *)arg;
 	philo = param->philo;
 	global = &param->global;
+	printf("test: %d\n", philo->id);
 	while (1)
 	{
 		if (is_dead_routine(param) || has_eaten_enough(param))
@@ -62,35 +63,31 @@ static void	*routine_monitor(void *arg)
 	return (NULL);
 }
 
-static int	launch_routine(t_param *param)
+static int	launch_routine(t_philo *philo)
 {
-	int			i;
-	t_philo		*philo;
-	t_global	*global;
+	int	i;
+	int	size;
 
-	philo = param->philo;
-	global = &param->global;
+	size = philo->global->number_of_philosphers;
 
 	i = 0;
-	while (i < global->number_of_philosphers)
+	while (i < size)
 	{
-		if (pthread_create(&(philo[i].philo), NULL, routine, param))
+		if (pthread_create(&(philo[i].philo), NULL, routine, &philo[i]))
 			return (error("Error: pthread_create failed", 1));
 		i++;			
 	}
-	return (1);
+	return (0);
 }
 
-int	launch(t_param *param)
+int	launch(t_philo *philo)
 {
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 
-	if (pthread_create(&(global->monitor), NULL, routine_monitor, param))
+	if (pthread_create(&(global->monitor), NULL, routine_monitor, philo))
 		return (error("Error: pthread_create failed", 1));
-	launch_routine(param);
+	launch_routine(philo);
 	return (0);
 }

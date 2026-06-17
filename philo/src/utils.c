@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 18:21:55 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 11:39:29 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static int	ft_atoi(const char *str)
 	return (sign * num);
 }
 
-void	convert_to_int(char **argv, t_global *global)
+void	convert_to_int(char **argv, t_global **global)
 {
-	global->number_of_philosphers = ft_atoi(argv[1]);
-	global->time_to_die = ft_atoi(argv[2]);
-	global->time_to_eat = ft_atoi(argv[3]);
-	global->time_to_sleep = ft_atoi(argv[4]);
+	(*global)->number_of_philosphers = ft_atoi(argv[1]);
+	(*global)->time_to_die = ft_atoi(argv[2]);
+	(*global)->time_to_eat = ft_atoi(argv[3]);
+	(*global)->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		global->number_of_times_must_eat = ft_atoi(argv[5]);
+		(*global)->number_of_times_must_eat = ft_atoi(argv[5]);
 	else
-		global->number_of_times_must_eat = -1;
+		(*global)->number_of_times_must_eat = -1;
 }
 
 int	log_start_time(t_global *global)
@@ -75,13 +75,11 @@ long	log_timestamp(t_global *global)
 	
 // }
 
-int	clean_setup(t_param *param)
+int	clean_setup(t_philo *philo)
 {
-	t_philo		*philo;
 	t_global	*global;
 
-	philo = param->philo;
-	global = &param->global;
+	global = philo->global;
 	
 	if (pthread_join(philo->philo, NULL))
 		return (error("Error: pthread_join failed", 1));

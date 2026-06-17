@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/16 17:53:20 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 11:38:51 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,6 @@
 # define INVALID_ARGC 1
 # define INVALID_ARGV 2
 
-typedef struct s_philo
-{
-	int				id;
-	int				is_dead;
-	long			time_last_meal;
-	int				number_of_meals_eaten;
-	pthread_t		philo;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;	
-} t_philo;
-
 typedef struct s_global
 {
 	int				number_of_philosphers;
@@ -50,6 +39,18 @@ typedef struct s_global
 	pthread_mutex_t	lock_number_of_meals_eaten;
 } t_global;
 
+typedef struct s_philo
+{
+	int				id;
+	int				is_dead;
+	long			time_last_meal;
+	int				number_of_meals_eaten;
+	pthread_t		philo;
+	pthread_mutex_t	right_fork;
+	pthread_mutex_t	left_fork;
+	t_global		*global;
+} t_philo;
+
 typedef struct s_param
 {
 	t_global	global;
@@ -59,9 +60,9 @@ typedef struct s_param
 // Functions called by main
 int		log_start_time(t_global *global);
 int		validate_args(int argc, char **argv);
-int		initialise_setup(char **argv, t_param *param);
-int		launch(t_param *param);
-int		clean_setup(t_param *param);
+int		setup(char **argv, t_philo **philo, t_global **global);
+int		launch(t_philo *philo);
+int		clean_setup(t_philo *philo);
 
 // Exit program conditions
 int	is_dead_routine(t_param *param);
@@ -71,7 +72,7 @@ int	has_eaten_enough(t_param *param);
 // Utils
 long	log_timestamp(t_global *global);
 int		error(char *msg, int to_ret);
-void	convert_to_int(char **argv, t_global *global);
+void	convert_to_int(char **argv, t_global **global);
 
 // Elements of routine
 int	grab_right_fork(t_param *param);
