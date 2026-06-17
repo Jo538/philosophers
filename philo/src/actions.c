@@ -21,7 +21,7 @@ static int	log_last_meal(t_philo *philo)
 		return (error("Error: pthread_mutex_lock failed for lock_time_last_meal", 1));
 	philo->time_last_meal = log_timestamp(global);
 	if (pthread_mutex_unlock(&(global->lock_time_last_meal)))
-		return (error("Error: pthread_mutex_unlock failed for lock_time_last_meal", 1));	
+		return (error("Error: pthread_mutex_unlock failed for lock_time_last_meal", 1));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 18:05:44 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 23:29:35 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	time_since_last_meal(t_philo *philo)
 	timestamp = log_timestamp(global) - philo->time_last_meal;
 	if (pthread_mutex_unlock(&(global->lock_time_last_meal)))
 		return (error("Error: pthread_mutex_unlock failed for lock_time_last_meal", -1));
-	return (timestamp);	
+	return (timestamp);
 }
 
 static int	is_dead(t_philo *philo)
@@ -55,11 +55,11 @@ int	monitor_death(t_philo *philo)
 		if (is_dead(&philo[i]))
 		{
 			if (pthread_mutex_lock(&(global->lock_is_dead)))
-				return (error("Error: pthread_mutex_lock failed for lock_is_dead", 1));
+				return (error("Error: pthread_mutex_lock failed for lock_is_dead", -1));
 			global->is_dead = 1;
 			if (pthread_mutex_unlock(&(global->lock_is_dead)))
-				return (error("Error: pthread_mutex_unlock failed for lock_is_dead", 1));
-			return (0);
+				return (error("Error: pthread_mutex_unlock failed for lock_is_dead", -1));
+			return (1);
 		}
 		i++;
 	}
@@ -102,10 +102,11 @@ int	monitor_eating(t_philo *philo)
 	if (count == global->number_of_philosphers)
 	{
 		if (pthread_mutex_lock(&(global->lock_have_eaten_enough)))
-			return (error("Error: pthread_mutex_lock failed for llock_have_eaten_enough", 1));
+			return (error("Error: pthread_mutex_lock failed for llock_have_eaten_enough", -1));
 		global->have_eaten_enough = 1;	
 		if (pthread_mutex_unlock(&(global->lock_have_eaten_enough)))
-			return (error("Error: pthread_mutex_unlock failed for lock_have_eaten_enough", 1));
+			return (error("Error: pthread_mutex_unlock failed for lock_have_eaten_enough", -1));
+		return (1);
 	}	
 	return (0);
 }
