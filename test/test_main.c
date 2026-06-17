@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 19:03:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 17:43:34 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/17 18:20:13 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,6 @@ int main(void)
 	// test_make_philo_and_call_routine();
 	printf("\n\n%s\n\n", "-----HAVE PHILOS EATEN ENOUGH-----");
 	test_have_eaten_enough();
+	printf("\n\n%s\n\n", "-----PHILO IS DEAD-----");
+	test_death_monitor();
 }
