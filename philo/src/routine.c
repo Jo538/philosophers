@@ -6,11 +6,29 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 18:04:24 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 11:48:50 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	grab_forks(t_philo *philo)
+{
+	int	id;
+
+	id = philo->id;
+	if (id % 2 == 1)
+	{
+		grab_right_fork(philo);
+		grab_left_fork(philo);		
+	}
+	if (id % 2 == 0)
+	{
+		grab_left_fork(philo);
+		grab_right_fork(philo);		
+	}
+	return (0);
+}
 
 // how do I communicate an error happening in the routine back to make_philo_and_call_routine?
 static void	*routine(void *arg)
@@ -18,20 +36,18 @@ static void	*routine(void *arg)
 	t_philo		*philo;
 
 	philo = (t_philo *)arg;
-
 	while (1)
 	{
 		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
-		grab_right_fork(philo);
-		grab_left_fork(philo);
+		grab_forks(philo);
 		eat(philo);
 		release_right_fork(philo);
 		release_left_fork(philo);
-		if (is_dead_routine(philo))
+		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
 		ft_sleep(philo);
-		if (is_dead_routine(philo))
+		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
 		ft_think(philo);			
 	}
@@ -47,7 +63,10 @@ static void	*routine_monitor(void *arg)
 	while (1)
 	{
 		if (monitor_eating(philo))
-			return (NULL);
+		{
+			printf("%s\n", "test");
+			return (NULL);			
+		}
 		if (monitor_death(philo))
 			return (NULL);
 		usleep(1000);

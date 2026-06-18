@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:38:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 11:24:02 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 11:31:21 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	grab_left_fork(t_philo *philo)
 		if (pthread_mutex_lock(&(global->forks[0])))
 			return (error("Error: pthread_mutex_lock failed for left fork", 1));		
 	}
-	if (pthread_mutex_lock(&(global->forks[id])))
+	else if (pthread_mutex_lock(&(global->forks[id])))
 		return (error("Error: pthread_mutex_lock failed for left fork", 1));
 	timestamp = log_timestamp(global);
 	if (timestamp == -1)
