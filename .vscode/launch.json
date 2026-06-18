@@ -21,7 +21,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceFolder}/philo/philo",
-			"args": ["1", "100", "50", "30"],
+			"args": ["2", "100", "50", "30"],
 			"cwd": "${workspaceRoot}"
 		}
 	]

@@ -6,11 +6,20 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 11:48:50 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:06:40 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	release_forks(t_philo *philo, int release_right, int release_left)
+{
+	if (release_right == 1)
+		release_right_fork(philo);
+	if (release_left == 1)
+		release_left_fork(philo);
+	return (0);
+}
 
 static int	grab_forks(t_philo *philo)
 {
@@ -19,13 +28,17 @@ static int	grab_forks(t_philo *philo)
 	id = philo->id;
 	if (id % 2 == 1)
 	{
-		grab_right_fork(philo);
-		grab_left_fork(philo);		
+		if (grab_right_fork(philo))
+			return (release_forks(philo, 1, 0), 1);
+		if (grab_left_fork(philo))
+			return (release_forks(philo, 1, 1), 1);	
 	}
 	if (id % 2 == 0)
 	{
-		grab_left_fork(philo);
-		grab_right_fork(philo);		
+		if (grab_left_fork(philo))
+			return (release_forks(philo, 0, 1), 1);
+		if (grab_right_fork(philo))
+			return (release_forks(philo, 1, 1), 1);		
 	}
 	return (0);
 }
@@ -40,14 +53,15 @@ static void	*routine(void *arg)
 	{
 		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
-		grab_forks(philo);
+		if (grab_forks(philo))
+			return (NULL);
 		eat(philo);
 		release_right_fork(philo);
 		release_left_fork(philo);
-		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
+		if (is_dead_routine(philo))
 			return (NULL);
 		ft_sleep(philo);
-		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
+		if (is_dead_routine(philo))
 			return (NULL);
 		ft_think(philo);			
 	}
@@ -63,10 +77,7 @@ static void	*routine_monitor(void *arg)
 	while (1)
 	{
 		if (monitor_eating(philo))
-		{
-			printf("%s\n", "test");
 			return (NULL);			
-		}
 		if (monitor_death(philo))
 			return (NULL);
 		usleep(1000);

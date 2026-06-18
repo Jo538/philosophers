@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 10:58:01 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:10:43 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	int				number_of_meals_eaten;
 	pthread_t		philo;
 	t_global		*global;
+	struct s_philo		*philos;
 } t_philo;
 
 // Functions called by main

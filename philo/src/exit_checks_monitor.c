@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:42:26 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 23:29:35 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 13:45:55 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	has_eaten_enough(t_philo *philo)
 	global = philo->global;
 	if (pthread_mutex_lock(&(global->lock_number_of_meals_eaten)))
 		return (error("Error: pthread_mutex_lock failed for lock", -1));
-	if (philo->number_of_meals_eaten == global->number_of_times_must_eat)
+	if (philo->number_of_meals_eaten >= global->number_of_times_must_eat)
 	{
 		if (pthread_mutex_unlock(&(global->lock_number_of_meals_eaten)))
 			return (error("Error: pthread_mutex_unlock failed for lock", -1));

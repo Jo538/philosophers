@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 12:41:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 12:07:44 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:09:18 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	eat(t_philo *philo)
 	philo->number_of_meals_eaten++;
 	if (pthread_mutex_unlock(&(global->lock_number_of_meals_eaten)))
 		return (error("Error: pthread_mutex_unlock failed for lock2", 1));
+	monitor_eating(philo->philos);
 	return (0);
 }
 

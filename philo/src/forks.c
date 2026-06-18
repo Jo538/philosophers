@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:38:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 11:31:21 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 13:36:33 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	grab_right_fork(t_philo *philo)
 		return (error("Error: pthread_mutex_lock failed for right fork", 1));
 	timestamp = log_timestamp(global);
 	if (timestamp == -1)
+		return (1);
+	if (have_eaten_enough_routine(philo))
 		return (1);
 	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
 	return (0);
@@ -48,6 +50,9 @@ int	grab_left_fork(t_philo *philo)
 	timestamp = log_timestamp(global);
 	if (timestamp == -1)
 		return (1);
+	if (have_eaten_enough_routine(philo))
+		return (1);
+	
 	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
 	return (0);		
 }
@@ -76,7 +81,7 @@ int	release_left_fork(t_philo *philo)
 		if (pthread_mutex_unlock(&(global->forks[0])))
 			return (error("Error: pthread_mutex_unlock failed for left fork", 1));		
 	}
-	if (pthread_mutex_unlock(&(global->forks[id])))
-		return (error("Error: pthread_mutex_unlock failed for right fork", 1));
+	else if (pthread_mutex_unlock(&(global->forks[id])))
+		return (error("Error: pthread_mutex_unlock failed for left fork", 1));
 	return (0);	
 }
