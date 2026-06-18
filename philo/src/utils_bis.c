@@ -18,36 +18,33 @@ int	error(char *msg, int to_ret)
 	return (to_ret);
 }
 
-static int	clean_forks(t_global *global)
+void	destroy_locks(t_global *g, int count)
 {
-	int	i;
-	int	size;
-
-	i = 0;
-	size = global->number_of_philosphers;
-	while (i < size)
-	{
-		if (pthread_mutex_destroy(&(global->forks[i])))
-			return (error("Error: pthread_mutex_destroy failed for locksss", 1));
-		i++;		
-	}
-	return (0);
+	if (count > 4)
+		pthread_mutex_destroy(&g->lock_number_of_meals_eaten);
+	if (count > 3)
+		pthread_mutex_destroy(&g->lock_time_last_meal);
+	if (count > 2)
+		pthread_mutex_destroy(&g->lock_have_eaten_enough);
+	if (count > 1)
+		pthread_mutex_destroy(&g->lock_is_dead);
+	if (count > 0)
+		pthread_mutex_destroy(&g->lock_print);
 }
 
-static int	clean_global(t_global *global)
+static int	clean_global(t_global *g)
 {
-	if (pthread_join(global->monitor, NULL))
-		return (error("Error: pthread_join failed", 1));
-	if (clean_forks(global))
-		return (1);
-	if (pthread_mutex_destroy(&(global->lock_is_dead)))
-		return (error( "Error: pthread_mutex_destroy failed for lock", 1));
-	if (pthread_mutex_destroy(&(global->lock_time_last_meal)))
-		return (error( "Error: pthread_mutex_destroy failed for lock_time_last_meal", 1));
-	if (pthread_mutex_destroy(&(global->lock_number_of_meals_eaten)))
-		return (error("Error: pthread_mutex_destroy failed for lock_number_of_meals_eaten", 1));
-	if (pthread_mutex_destroy(&(global->lock_have_eaten_enough)))
-		return (error( "Error: pthread_mutex_destroy failed for lock_eaten_enough", 1));
+	int	i;
+
+	i = 0;
+	if (pthread_join(g->monitor, NULL))
+		return (error("Error: join", 1));
+	while (i < g->number_of_philosphers)
+	{
+		pthread_mutex_destroy(&g->forks[i]);
+		i++;
+	}
+	destroy_locks(g, 5);
 	return (0);
 }
 
@@ -61,10 +58,10 @@ static int	clean_philo(t_philo *philo)
 	while (i < size)
 	{
 		if (pthread_join(philo[i].philo, NULL))
-			return (error("Error: pthread_join failed", 1));
-		i++;		
+			return (error("Error: join", 1));
+		i++;
 	}
-	return (0);	
+	return (0);
 }
 
 int	clean_setup(t_philo *philo)

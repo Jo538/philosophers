@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	setup_forks(t_global *global)
+static int	init_forks(t_global *global)
 {
 	int	i;
 	int	size;
@@ -20,63 +20,99 @@ static int	setup_forks(t_global *global)
 	size = global->number_of_philosphers;
 	global->forks = malloc(size * sizeof(pthread_mutex_t));
 	if (!global->forks)
-		return (error("Error: malloc failed", 1));
-	memset(global->forks, '\0', size * sizeof(pthread_mutex_t));
-	i = 0;		
+		return (error("Error: malloc", 1));
+	i = 0;
 	while (i < size)
 	{
-		if (pthread_mutex_init(&(global->forks[i]), NULL))
-			return (error("Error: pthread_mutex_init failed for right fork", 1));	
-		i++;	
+		if (pthread_mutex_init(&global->forks[i], NULL))
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&global->forks[i]);
+			free(global->forks);
+			global->forks = NULL;
+			return (error("Error: fork init", 1));
+		}
+		i++;
 	}
-	return (0);	
+	return (0);
+}
+
+static int	init_locks(t_global *g)
+{
+	if (pthread_mutex_init(&g->lock_print, NULL))
+		return (0);
+	if (pthread_mutex_init(&g->lock_is_dead, NULL))
+		return (1);
+	if (pthread_mutex_init(&g->lock_have_eaten_enough, NULL))
+		return (2);
+	if (pthread_mutex_init(&g->lock_time_last_meal, NULL))
+		return (3);
+	if (pthread_mutex_init(&g->lock_number_of_meals_eaten, NULL))
+		return (4);
+	return (5);
+}
+
+static void	destroy_forks_array(t_global *g)
+{
+	int	i;
+
+	i = 0;
+	while (i < g->number_of_philosphers)
+	{
+		pthread_mutex_destroy(&g->forks[i]);
+		i++;
+	}
+	free(g->forks);
+	g->forks = NULL;
 }
 
 static int	setup_global(char **argv, t_global **global)
 {
-	(*global)->is_dead = 0;
-	(*global)->have_eaten_enough = 0;
+	t_global	*g;
+	int			n;
+
+	g = *global;
+	g->is_dead = 0;
+	g->have_eaten_enough = 0;
+	g->forks = NULL;
 	convert_to_int(argv, global);
-	if (setup_forks(*global))
+	if (init_forks(g))
 		return (1);
-	if (pthread_mutex_init(&((*global)->lock_is_dead), NULL))
-		return (error("Error: pthread_mutex_init failed for lock_is_dead", 1));
-	if (pthread_mutex_init(&((*global)->lock_have_eaten_enough), NULL))
-		return (error("Error: pthread_mutex_init failed for lock_have_eaten_enough", 1));
-	if (pthread_mutex_init(&((*global)->lock_time_last_meal), NULL))
-		return (error("Error: pthread_mutex_init failed for lock_time_last_meal", 1));
-	if (pthread_mutex_init(&((*global)->lock_number_of_meals_eaten), NULL))
-		return (error("Error: pthread_mutex_init failed for lock_number_of_meals_eaten", 1));
-	return (0);	
+	n = init_locks(g);
+	if (n < 5)
+	{
+		destroy_locks(g, n);
+		destroy_forks_array(g);
+		return (error("Error: lock init", 1));
+	}
+	return (0);
 }
 
-static int	setup_philo(t_philo **philo, t_global **global)
+int	setup(char **argv, t_philo **philo, t_global **global)
 {
 	int	i;
 	int	size;
 
+	*philo = NULL;
+	if (setup_global(argv, global))
+		return (1);
 	size = (*global)->number_of_philosphers;
 	*philo = malloc(size * sizeof(t_philo));
 	if (!*philo)
-		return (error("Error: malloc failed", 1));
-	memset(*philo, '\0', size * sizeof(t_philo));
-	i = 0;		
+	{
+		destroy_locks(*global, 5);
+		destroy_forks_array(*global);
+		return (error("Error: malloc", 1));
+	}
+	i = 0;
 	while (i < size)
 	{
 		(*philo)[i].id = i + 1;
+		(*philo)[i].time_last_meal = 0;
 		(*philo)[i].number_of_meals_eaten = 0;
 		(*philo)[i].global = *global;
 		(*philo)[i].philos = philo;
-		i++;	
+		i++;
 	}
-	return (0);	
-}
-
-int	setup(char **argv, t_philo **philo, t_global **global)
-{		
-	if (setup_global(argv, global))
-		return (1);
-	if (setup_philo(philo, global))
-		return (1);
 	return (0);
 }

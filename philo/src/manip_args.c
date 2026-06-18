@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int	ft_isdigit(int c)
+static int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -22,11 +22,12 @@ int	ft_isdigit(int c)
 static int	is_positive_int(char *str)
 {
 	int	i;
-	
-	i = 0;
 
+	i = 0;
 	if (str[0] == '+')
-		i++;	
+		i++;
+	if (!str[i])
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -50,17 +51,31 @@ static int	are_positive_ints(char **argv)
 	return (1);
 }
 
+static int	check_values(char **argv)
+{
+	int	i;
+
+	if (ft_atoi(argv[1]) < 1)
+		return (0);
+	i = 2;
+	while (i < 5)
+	{
+		if (ft_atoi(argv[i]) < 1)
+			return (0);
+		i++;
+	}
+	if (argv[5] && ft_atoi(argv[5]) < 0)
+		return (0);
+	return (1);
+}
+
 int	validate_args(int argc, char **argv)
 {
-	if ((argc != 5) && (argc != 6))
-	{
-		printf("%s\n", "Error: Incorrect number of philosophers");
-		return (1);	
-	}
+	if (argc != 5 && argc != 6)
+		return (error("Error: bad argc", 1));
 	if (!are_positive_ints(argv))
-	{
-		printf("%s\n", "Error: Invalid argv format");
-		return (1);	
-	}
+		return (error("Error: bad argv format", 1));
+	if (!check_values(argv))
+		return (error("Error: arg values out of range", 1));
 	return (0);
 }

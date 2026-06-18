@@ -12,37 +12,33 @@
 
 #include "philo.h"
 
-static int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	i;
-	int	num;
-	int	sign;
+	long	num;
+	int		i;
 
-	i = 0;
 	num = 0;
-	sign = 1;
-	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
-		i++;
-	if (str[i] == '-')
-		sign = -1;
-	if (str[i] == '-' || str[i] == '+')
+	i = 0;
+	if (str[i] == '+')
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		num = 10 * num + ((char)str[i] - '0');
+		num = num * 10 + (str[i] - '0');
+		if (num > INT_MAX)
+			return (-1);
 		i++;
 	}
-	return (sign * num);
+	return (num);
 }
 
 void	convert_to_int(char **argv, t_global **global)
 {
-	(*global)->number_of_philosphers = ft_atoi(argv[1]);
+	(*global)->number_of_philosphers = (int)ft_atoi(argv[1]);
 	(*global)->time_to_die = ft_atoi(argv[2]);
 	(*global)->time_to_eat = ft_atoi(argv[3]);
 	(*global)->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		(*global)->number_of_times_must_eat = ft_atoi(argv[5]);
+		(*global)->number_of_times_must_eat = (int)ft_atoi(argv[5]);
 	else
 		(*global)->number_of_times_must_eat = -1;
 }
@@ -60,12 +56,29 @@ int	log_start_time(t_global *global)
 long	log_timestamp(t_global *global)
 {
 	struct timeval	end;
-	long			timestamp;
 	long			end_in_ms;
-	
+
 	if (gettimeofday(&end, NULL))
-		return (error("Error: gettimeofday failed", -1));
+		return (error("Error: gettimeofday", -1));
 	end_in_ms = end.tv_sec * 1000 + end.tv_usec / 1000;
-	timestamp = end_in_ms - global->start_simulation;
-	return (timestamp);
+	return (end_in_ms - global->start_simulation);
+}
+
+void	print_status(t_philo *philo, char *msg)
+{
+	t_global	*g;
+	int			dead;
+	long		ts;
+
+	g = philo->global;
+	pthread_mutex_lock(&g->lock_print);
+	pthread_mutex_lock(&g->lock_is_dead);
+	dead = g->is_dead;
+	pthread_mutex_unlock(&g->lock_is_dead);
+	if (!dead)
+	{
+		ts = log_timestamp(g);
+		printf("%ld %d %s\n", ts, philo->id, msg);
+	}
+	pthread_mutex_unlock(&g->lock_print);
 }

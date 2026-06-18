@@ -13,14 +13,13 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <unistd.h>
+# include <unistd.h>
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <signal.h>
+# include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <sys/wait.h>
 
 # define INVALID_ARGC 1
 # define INVALID_ARGV 2
@@ -41,7 +40,8 @@ typedef struct s_global
 	pthread_mutex_t	lock_time_last_meal;
 	pthread_mutex_t	lock_number_of_meals_eaten;
 	pthread_mutex_t	lock_have_eaten_enough;
-} t_global;
+	pthread_mutex_t	lock_print;
+}	t_global;
 
 typedef struct s_philo
 {
@@ -51,7 +51,7 @@ typedef struct s_philo
 	pthread_t		philo;
 	t_global		*global;
 	struct s_philo	**philos;
-} t_philo;
+}	t_philo;
 
 // Functions called by main
 int		log_start_time(t_global *global);
@@ -61,23 +61,29 @@ int		launch(t_philo *philo);
 int		clean_setup(t_philo *philo);
 
 // Exit program conditions
-int	is_dead_routine(t_philo *philo);
-int	monitor_death(t_philo *philo);
-int	monitor_eating(t_philo *philo);
-int	have_eaten_enough_routine(t_philo *philo);
+int		is_dead_routine(t_philo *philo);
+int		monitor_death(t_philo *philo);
+int		monitor_eating(t_philo *philo);
+int		have_eaten_enough_routine(t_philo *philo);
 
 // Utils
 long	log_timestamp(t_global *global);
 int		error(char *msg, int to_ret);
 void	convert_to_int(char **argv, t_global **global);
+long	ft_atoi(const char *str);
+void	print_status(t_philo *philo, char *msg);
+void	destroy_locks(t_global *g, int count);
+
+// Thread entry points (used cross-file by launch)
+void	*routine(void *arg);
 
 // Elements of routine
-int	grab_right_fork(t_philo *philo);
-int	grab_left_fork(t_philo *philo);
-int	release_right_fork(t_philo *philo);
-int	release_left_fork(t_philo *philo);
-int	eat(t_philo *philo);
-int	ft_sleep(t_philo *philo);
-int	ft_think(t_philo *philo);
+int		grab_right_fork(t_philo *philo);
+int		grab_left_fork(t_philo *philo);
+int		release_right_fork(t_philo *philo);
+int		release_left_fork(t_philo *philo);
+int		eat(t_philo *philo);
+int		ft_sleep(t_philo *philo);
+int		ft_think(t_philo *philo);
 
 #endif

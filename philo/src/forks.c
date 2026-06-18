@@ -12,81 +12,62 @@
 
 #include "philo.h"
 
-
 int	grab_right_fork(t_philo *philo)
 {
-	int			id;
-	long		timestamp;
 	t_global	*global;
+	int			id;
 
 	id = philo->id;
 	global = philo->global;
-	if (pthread_mutex_lock(&(global->forks[id - 1])))
-		return (error("Error: pthread_mutex_lock failed for right fork", 1));
-	timestamp = log_timestamp(global);
-	if (timestamp == -1)
-		return (1);
-	if (have_eaten_enough_routine(philo))
-		return (1);
-	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
+	if (pthread_mutex_lock(&global->forks[id - 1]))
+		return (error("Error: lock", 1));
+	print_status(philo, "has taken a fork");
 	return (0);
 }
 
 int	grab_left_fork(t_philo *philo)
 {
-	int			id;
-	long		timestamp;
 	t_global	*global;
+	int			id;
+	int			left;
 
 	id = philo->id;
 	global = philo->global;
-	if (global->number_of_philosphers == 1)
-	{
-		usleep(global->time_to_die * 1000);
-		return (1);
-	}
 	if (id == global->number_of_philosphers)
-	{
-		if (pthread_mutex_lock(&(global->forks[0])))
-			return (error("Error: pthread_mutex_lock failed for left fork", 1));		
-	}
-	else if (pthread_mutex_lock(&(global->forks[id])))
-		return (error("Error: pthread_mutex_lock failed for left fork", 1));
-	timestamp = log_timestamp(global);
-	if (timestamp == -1)
-		return (1);
-	if (have_eaten_enough_routine(philo))
-		return (1);
-	
-	printf("%ld ms: philo %d has taken a fork\n", timestamp, philo->id);
-	return (0);		
+		left = 0;
+	else
+		left = id;
+	if (pthread_mutex_lock(&global->forks[left]))
+		return (error("Error: lock", 1));
+	print_status(philo, "has taken a fork");
+	return (0);
 }
 
 int	release_right_fork(t_philo *philo)
 {
-	int			id;
 	t_global	*global;
+	int			id;
 
 	id = philo->id;
 	global = philo->global;
-	if (pthread_mutex_unlock(&(global->forks[id - 1])))
-		return (error("Error: pthread_mutex_unlock failed for right fork", 1));
+	if (pthread_mutex_unlock(&global->forks[id - 1]))
+		return (error("Error: unlock", 1));
 	return (0);
 }
 
 int	release_left_fork(t_philo *philo)
 {
-	int			id;
 	t_global	*global;
+	int			id;
+	int			left;
 
 	id = philo->id;
 	global = philo->global;
 	if (id == global->number_of_philosphers)
-	{
-		if (pthread_mutex_unlock(&(global->forks[0])))
-			return (error("Error: pthread_mutex_unlock failed for left fork", 1));		
-	}
-	else if (pthread_mutex_unlock(&(global->forks[id])))
-		return (error("Error: pthread_mutex_unlock failed for left fork", 1));
-	return (0);	
+		left = 0;
+	else
+		left = id;
+	if (pthread_mutex_unlock(&global->forks[left]))
+		return (error("Error: unlock", 1));
+	return (0);
 }
