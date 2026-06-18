@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:38:59 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 13:36:33 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 15:13:05 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	grab_left_fork(t_philo *philo)
 
 	id = philo->id;
 	global = philo->global;
+	if (global->number_of_philosphers == 1)
+	{
+		usleep(global->time_to_die * 1000);
+		return (1);
+	}
 	if (id == global->number_of_philosphers)
 	{
 		if (pthread_mutex_lock(&(global->forks[0])))

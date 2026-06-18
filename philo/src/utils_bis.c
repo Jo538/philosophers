@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 21:17:22 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 14:46:29 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 15:03:55 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	clean_forks(t_global *global)
 	while (i < size)
 	{
 		if (pthread_mutex_destroy(&(global->forks[i])))
-			return (error("Error: pthread_mutex_destroy failed for lock", 1));
+			return (error("Error: pthread_mutex_destroy failed for locksss", 1));
 		i++;		
 	}
 	return (0);

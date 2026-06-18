@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 14:26:28 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 15:01:02 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static void	*routine(void *arg)
 		if (is_dead_routine(philo) || have_eaten_enough_routine(philo))
 			return (NULL);
 		if (grab_forks(philo))
+			return (NULL);
+		if (is_dead_routine(philo))
 			return (NULL);
 		eat(philo);
 		release_right_fork(philo);
