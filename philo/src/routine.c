@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 15:45:12 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 14:06:40 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:26:28 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ static void	*routine_monitor(void *arg)
 
 	philo = (t_philo *)arg;
 	while (1)
-	{
-		if (monitor_eating(philo))
-			return (NULL);			
+	{	
+		if (have_eaten_enough_routine(philo))
+			return (NULL);	
 		if (monitor_death(philo))
 			return (NULL);
 		usleep(1000);

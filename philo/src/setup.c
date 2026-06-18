@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 14:08:48 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:45:50 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	setup_philo(t_philo **philo, t_global **global)
 		(*philo)[i].id = i + 1;
 		(*philo)[i].number_of_meals_eaten = 0;
 		(*philo)[i].global = *global;
-		(*philo)[i].philos = *philo;
+		(*philo)[i].philos = philo;
 		i++;	
 	}
 	return (0);	

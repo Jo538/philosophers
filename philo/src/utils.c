@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/18 11:01:10 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 14:27:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,4 @@ long	log_timestamp(t_global *global)
 	end_in_ms = end.tv_sec * 1000 + end.tv_usec / 1000;
 	timestamp = end_in_ms - global->start_simulation;
 	return (timestamp);
-}
-
-// int	clean_philo(t_philo *philo)
-// {
-	
-// }
-
-int	clean_setup(t_philo *philo)
-{
-	t_global	*global;
-
-	global = philo->global;
-	
-	if (pthread_join(philo->philo, NULL))
-		return (error("Error: pthread_join failed", 1));
-	if (pthread_join(global->monitor, NULL))
-		return (error("Error: pthread_join failed", 1));
-	if (pthread_mutex_destroy(&(global->lock_is_dead)))
-		return (error( "Error: pthread_mutex_destroy failed for lock", 1));
-	if (pthread_mutex_destroy(&(global->lock_number_of_meals_eaten)))
-		return (error("Error: pthread_mutex_destroy failed for lock", 1));
-	return (0);
 }
