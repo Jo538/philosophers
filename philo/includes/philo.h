@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 17:09:27 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 18:04:16 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 10:58:01 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_global
 	int				have_eaten_enough;
 	long			start_simulation;
 	pthread_t		monitor;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock_is_dead;
 	pthread_mutex_t	lock_time_last_meal;
 	pthread_mutex_t	lock_number_of_meals_eaten;
@@ -48,8 +49,6 @@ typedef struct s_philo
 	long			time_last_meal;
 	int				number_of_meals_eaten;
 	pthread_t		philo;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
 	t_global		*global;
 } t_philo;
 

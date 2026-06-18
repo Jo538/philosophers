@@ -6,7 +6,7 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/06 18:06:19 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 11:39:29 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 11:01:10 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,6 @@ int	clean_setup(t_philo *philo)
 		return (error("Error: pthread_join failed", 1));
 	if (pthread_join(global->monitor, NULL))
 		return (error("Error: pthread_join failed", 1));
-	if (pthread_mutex_destroy(&(philo->right_fork)))
-		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
-	if (pthread_mutex_destroy(&(philo->left_fork)))
-		return (error("Error: pthread_mutex_destroy failed for right fork", 1));
 	if (pthread_mutex_destroy(&(global->lock_is_dead)))
 		return (error( "Error: pthread_mutex_destroy failed for lock", 1));
 	if (pthread_mutex_destroy(&(global->lock_number_of_meals_eaten)))

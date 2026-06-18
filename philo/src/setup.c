@@ -6,17 +6,39 @@
 /*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 11:25:14 by admin             #+#    #+#             */
-/*   Updated: 2026/06/17 18:07:00 by admin            ###   ########.fr       */
+/*   Updated: 2026/06/18 11:00:42 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	setup_forks(t_global *global)
+{
+	int	i;
+	int	size;
+
+	size = global->number_of_philosphers;
+	global->forks = malloc(size * sizeof(pthread_mutex_t));
+	if (!global->forks)
+		return (error("Error: malloc failed", 1));
+	memset(global->forks, '\0', size * sizeof(pthread_mutex_t));
+	i = 0;		
+	while (i < size)
+	{
+		if (pthread_mutex_init(&(global->forks[i]), NULL))
+			return (error("Error: pthread_mutex_init failed for right fork", 1));	
+		i++;	
+	}
+	return (0);	
+}
 
 static int	setup_global(char **argv, t_global **global)
 {
 	(*global)->is_dead = 0;
 	(*global)->have_eaten_enough = 0;
 	convert_to_int(argv, global);
+	if (setup_forks(*global))
+		return (1);
 	if (pthread_mutex_init(&((*global)->lock_is_dead), NULL))
 		return (error("Error: pthread_mutex_init failed for lock_is_dead", 1));
 	if (pthread_mutex_init(&((*global)->lock_have_eaten_enough), NULL))
@@ -44,10 +66,6 @@ static int	setup_philo(t_philo **philo, t_global **global)
 		(*philo)[i].id = i + 1;
 		(*philo)[i].number_of_meals_eaten = 0;
 		(*philo)[i].global = *global;
-		if (pthread_mutex_init(&((*philo)[i].right_fork), NULL))
-			return (error("Error: pthread_mutex_init failed for right fork", 1));
-		if (pthread_mutex_init(&((*philo)[i].left_fork), NULL))
-			return (error("Error: pthread_mutex_init failed for left fork", 1));
 		i++;	
 	}
 	return (0);	
